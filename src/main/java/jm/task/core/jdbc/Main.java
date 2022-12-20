@@ -15,25 +15,26 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) {
 
-        Util util = new Util();
-        try (Connection connection = util.getConnection()) {
-            UserDaoJDBCImpl userDao = new UserDaoJDBCImpl(connection);
-            userDao.createUsersTable();
 
-            userDao.saveUser("Name1", "LastName1", (byte) 20);
-            userDao.saveUser("Name2", "LastName2", (byte) 25);
-            userDao.saveUser("Name3", "LastName3", (byte) 31);
-            userDao.saveUser("Name4", "LastName4", (byte) 38);
+        UserDaoJDBCImpl userDao = new UserDaoJDBCImpl();
+        userDao.createUsersTable();
 
-            userDao.removeUserById(1);
-            userDao.getAllUsers();
-            userDao.cleanUsersTable();
-            userDao.dropUsersTable();
+        userDao.saveUser("Name1", "LastName1", (byte) 20);
+        userDao.saveUser("Name2", "LastName2", (byte) 25);
+        userDao.saveUser("Name3", "LastName3", (byte) 31);
+        userDao.saveUser("Name4", "LastName4", (byte) 38);
 
+        userDao.removeUserById(1);
+        userDao.getAllUsers();
+        userDao.cleanUsersTable();
+        userDao.dropUsersTable();
+
+        try {
+            Util.closeConnection();
+            System.out.println("Connection closed!");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-
         // реализуйте алгоритм здесь
 
     }

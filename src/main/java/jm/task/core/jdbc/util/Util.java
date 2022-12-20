@@ -9,11 +9,14 @@ public class Util {
     private static final String PASS = "";
     private static final String URL = "jdbc:mysql://localhost:3306/sys";
 
-    public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER_NAME, PASS);
+    private static Connection connection;
+
+    public  static Connection getConnection() throws SQLException {
+        if (connection ==  null) return  connection = DriverManager.getConnection(URL, USER_NAME, PASS);
+        return connection;
     }
 
-    public void closeConnection(Connection connection) throws SQLException {
+    public static void closeConnection() throws SQLException {
         connection.close();
     }
 
