@@ -1,6 +1,9 @@
 package jm.task.core.jdbc;
 
+import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
 import java.sql.Connection;
@@ -16,7 +19,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-        UserDaoJDBCImpl userDao = new UserDaoJDBCImpl();
+        UserDao userDao = new UserDaoHibernateImpl();
         userDao.createUsersTable();
 
         userDao.saveUser("Name1", "LastName1", (byte) 20);
@@ -24,15 +27,20 @@ public class Main {
         userDao.saveUser("Name3", "LastName3", (byte) 31);
         userDao.saveUser("Name4", "LastName4", (byte) 38);
 
-        userDao.removeUserById(1);
+
+
+
+        userDao.removeUserById(2);
         userDao.getAllUsers();
+        System.out.println(userDao.getAllUsers().get(0));
         userDao.cleanUsersTable();
         userDao.dropUsersTable();
 
         try {
-            Util.closeConnection();
+            //Util.closeConnection();
+            Util.closeFactory();
             System.out.println("Connection closed!");
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         // реализуйте алгоритм здесь
